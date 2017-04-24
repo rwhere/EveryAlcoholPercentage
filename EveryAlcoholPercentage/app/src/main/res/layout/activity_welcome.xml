@@ -1,68 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context="com.cs499.ryan.everyalcoholpercentage.WelcomeActivity">
+    android:background="@color/colorWhite">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="20">
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="80">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/beermugs"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-
+        android:orientation="horizontal"
+        android:layout_weight="10"
+        android:background="@color/colorPrimary">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="Sort"
+            android:textSize="18dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:text="Beers"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:paddingTop="15dp"
+            android:gravity="center"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="Filter"
+            android:textSize="18dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorPrimary"/>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40">
+        android:orientation="vertical"
+        android:layout_weight="75"
+        android:background="@drawable/border">
+
+        <ListView
+            android:id="@+id/mainListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorPrimary"
+            android:dividerHeight="1px">
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="15">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_weight="1">
-        </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-            <Button
-                android:layout_gravity="center"
+            <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Let's Get Drinking"/>
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:src="@drawable/favbutton"
+                android:scaleType="centerInside"
+                android:background="@color/colorWhite"
+                android:paddingTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:text="Favorites"
+                android:textSize="18dp"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:src="@drawable/beerbutton"
+                android:scaleType="centerInside"
+                android:background="@color/colorWhite"
+                android:paddingTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:text="Beers"
+                android:textSize="18dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:src="@drawable/liquorbutton"
+                android:scaleType="centerInside"
+                android:background="@color/colorWhite"
+                android:paddingTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:text="Liquors"
+                android:textSize="18dp"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
     </LinearLayout>
