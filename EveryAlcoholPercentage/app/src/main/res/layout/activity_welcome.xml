@@ -42,17 +42,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:layout_weight="75"
-        android:background="@drawable/border">
+        android:background="@drawable/border"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/mainListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/colorPrimary"
-            android:dividerHeight="1px">
-        </ListView>
+            android:dividerHeight="1px"></ListView>
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="30"
-                android:text="Beers"
+                android:text="Beer"
                 android:textSize="18dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -125,7 +124,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="30"
-                android:text="Liquors"
+                android:text="Liquor"
+                android:textSize="18dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="70"
+                android:src="@drawable/winebtn"
+                android:scaleType="centerInside"
+                android:background="@color/colorWhite"
+                android:paddingTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="30"
+                android:text="Wine"
                 android:textSize="18dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
