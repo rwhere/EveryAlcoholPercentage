@@ -8,6 +8,7 @@
     <ImageButton
         android:layout_width="0dp"
         android:layout_weight="2"
+        android:id="@+id/heartImageButton"
         android:adjustViewBounds="true"
         android:src="@drawable/heartnofill"
         android:scaleType="centerCrop"
@@ -25,6 +26,7 @@
 
         <TextView
             android:textSize="20sp"
+            android:id="@+id/nameTextView"
             android:textColor="#000000"
             android:text="Lagunitas IPA"
             android:layout_width="wrap_content"
@@ -32,6 +34,7 @@
 
         <TextView
             android:textSize="16sp"
+            android:id="@+id/makerNameTextView"
             android:text="Lagunitas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -42,6 +45,7 @@
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
+        android:id="@+id/percentTextView"
         android:text="5.0%"
         android:textSize="25sp"
         android:paddingLeft="15dp"
