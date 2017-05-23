@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/sortName"
-        android:title="Name"/>
+        android:id="@+id/sortNameAscending"
+        android:title="Name Ascending"/>
+    <item
+        android:id="@+id/sortNameDescending"
+        android:title="Name Descending"/>
     <item
         android:id="@+id/sortAscending"
         android:title="ABV Ascending"/>

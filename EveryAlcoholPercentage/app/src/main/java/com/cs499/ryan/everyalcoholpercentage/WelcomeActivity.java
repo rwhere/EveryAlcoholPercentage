@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import io.paperdb.Paper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.HashSet;
 
@@ -192,6 +194,160 @@ public class WelcomeActivity extends AppCompatActivity {
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+                        if(item.getItemId() == R.id.sortNameAscending) {
+                            if(currentView == VIEW.BEER) {
+                                Collections.sort(beerList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.FAVORITES) {
+                                Collections.sort(favoritesList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.LIQUOR) {
+                                Collections.sort(liquorList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.WINE) {
+                                Collections.sort(wineList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            }
+                        } else if (item.getItemId() == R.id.sortNameDescending) {
+                            if(currentView == VIEW.BEER) {
+                                Collections.sort(beerList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return -1 * lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.FAVORITES) {
+                                Collections.sort(favoritesList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return -1 * lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.LIQUOR) {
+                                Collections.sort(liquorList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return -1 * lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            } else if(currentView == VIEW.WINE) {
+                                Collections.sort(wineList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        return -1 * lhs.getName().compareTo(rhs.getName());
+                                    }
+                                });
+                            }
+                        } else if(item.getItemId() == R.id.sortAscending) {
+                            if(currentView == VIEW.BEER) {
+                                Collections.sort(beerList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(lhs.getAlcoholPercentage()) -
+                                                Double.valueOf(rhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.FAVORITES) {
+                                Collections.sort(favoritesList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(lhs.getAlcoholPercentage()) -
+                                                Double.valueOf(rhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.LIQUOR) {
+                                Collections.sort(liquorList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(lhs.getAlcoholPercentage()) -
+                                                Double.valueOf(rhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.WINE) {
+                                Collections.sort(wineList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(lhs.getAlcoholPercentage()) -
+                                                Double.valueOf(rhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            }
+                        } else if(item.getItemId() == R.id.sortDescending) {
+                            if(currentView == VIEW.BEER) {
+                                Collections.sort(beerList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(rhs.getAlcoholPercentage()) -
+                                                Double.valueOf(lhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.FAVORITES) {
+                                Collections.sort(favoritesList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(rhs.getAlcoholPercentage()) -
+                                                Double.valueOf(lhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.LIQUOR) {
+                                Collections.sort(liquorList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(rhs.getAlcoholPercentage()) -
+                                                Double.valueOf(lhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            } else if(currentView == VIEW.WINE) {
+                                Collections.sort(wineList, new Comparator<Beverage>() {
+                                    @Override
+                                    public int compare(Beverage lhs, Beverage rhs) {
+                                        double d = (Double.valueOf(rhs.getAlcoholPercentage()) -
+                                                Double.valueOf(lhs.getAlcoholPercentage()));
+                                        if(d > 0 ) return 1;
+                                        if(d < 0) return -1;
+                                        return 0;
+                                    }
+                                });
+                            }
+                        }
+                        beverageArrayAdapter.notifyDataSetChanged();
                         return true;
                     }
                 });
