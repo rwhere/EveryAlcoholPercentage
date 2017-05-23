@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "73924959781",
+    "firebase_url": "https://everyalcoholpercentage.firebaseio.com",
+    "project_id": "everyalcoholpercentage",
+    "storage_bucket": "everyalcoholpercentage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73924959781:android:20246d3a5b667056",
+        "android_client_info": {
+          "package_name": "com.cs499.ryan.everyalcoholpercentage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73924959781-2otafdao6tmh47aj1aff5ho0cv0sltkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs499.ryan.everyalcoholpercentage",
+            "certificate_hash": "471f099d704cbcb4112f5ff385af36e2de144d3e"
+          }
+        },
+        {
+          "client_id": "73924959781-hk3qqb21bohdk43j7nbl4blfhocr32cs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDysY2PuM3THyx8Pa-DGXMFdQ8hrik10Dg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73924959781-hk3qqb21bohdk43j7nbl4blfhocr32cs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

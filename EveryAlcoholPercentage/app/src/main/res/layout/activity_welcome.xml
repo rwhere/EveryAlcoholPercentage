@@ -14,6 +14,7 @@
 
         <Button
             style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/sortButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:background="@color/colorPrimary"
-            android:text="Filter"
+            android:text="Search"
             android:textColor="@color/colorWhite"
             android:textSize="18dp" />
     </LinearLayout>
@@ -53,9 +54,8 @@
         <ListView
             android:id="@+id/mainListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/colorPrimary"
-            android:dividerHeight="1px"></ListView>
+            android:layout_height="match_parent">
+        </ListView>
     </LinearLayout>
 
     <LinearLayout
@@ -71,6 +71,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/favButton"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="70"
@@ -94,6 +95,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/beerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="70"
@@ -117,6 +119,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/liquorButton"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="70"
@@ -140,6 +143,7 @@
             android:layout_weight="1">
 
             <ImageButton
+                android:id="@+id/wineButton"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="70"

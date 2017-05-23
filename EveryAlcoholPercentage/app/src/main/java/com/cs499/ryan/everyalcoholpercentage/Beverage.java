@@ -6,20 +6,20 @@ package com.cs499.ryan.everyalcoholpercentage;
 
 public class Beverage {
 
+    private Long id;
     private String name;
     private String makerName;
-    private double alcoholPercentage;
-    private boolean favorite;
+    private String alcoholPercentage;
 
     public Beverage() {
 
     }
 
-    public Beverage(String name, String makerName, double alcoholPercentage, boolean favorite) {
+    public Beverage(Long id, String name, String makerName, String alcoholPercentage) {
+        this.id = id;
         this.name = name;
         this.makerName = makerName;
         this.alcoholPercentage = alcoholPercentage;
-        this.favorite = favorite;
     }
 
     public String getName() {
@@ -30,9 +30,11 @@ public class Beverage {
         return makerName;
     }
 
-    public double getAlcoholPercentage() {
+    public String getAlcoholPercentage() {
         return alcoholPercentage;
     }
+
+    public Long getId() { return id; }
 
     public void setName(String name) {
         this.name = name;
@@ -42,15 +44,7 @@ public class Beverage {
         this.makerName = makerName;
     }
 
-    public void setAlcoholPercentage(double alcoholPercentage) {
+    public void setAlcoholPercentage(String alcoholPercentage) {
         this.alcoholPercentage = alcoholPercentage;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
     }
 }
