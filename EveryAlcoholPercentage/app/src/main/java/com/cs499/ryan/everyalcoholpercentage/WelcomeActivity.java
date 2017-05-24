@@ -2,9 +2,11 @@ package com.cs499.ryan.everyalcoholpercentage;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.util.Log;
@@ -21,6 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import io.paperdb.Paper;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -88,7 +99,7 @@ public class WelcomeActivity extends AppCompatActivity {
             liquorVersion = new Integer(0);
             Paper.book().write("liquorVersion", liquorVersion);
         }
-        //display local data
+        //display local data, start with beer
         beerList = Paper.book().read("beerList");
         if(beerList == null) {
             beerList = new ArrayList<Beverage>();
@@ -113,13 +124,14 @@ public class WelcomeActivity extends AppCompatActivity {
                     beerRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            beerList = new ArrayList<>();
+                            beerList.clear();
                             for(DataSnapshot ds : dataSnapshot.getChildren()) {
                                 Beverage b = ds.getValue(Beverage.class);
                                 beerList.add(b);
                             }
-                            beverageArrayAdapter.clear();
-                            beverageArrayAdapter.addAll(beerList);
+                            //beverageArrayAdapter.clear();
+                            //beverageArrayAdapter.addAll(beerList);
+                            beverageArrayAdapter.notifyDataSetChanged();
                             Paper.book().write("beerList", beerList);
                             Paper.book().write("beerVersion", beerVersion = dbVersion);
                         }
@@ -368,4 +380,20 @@ public class WelcomeActivity extends AppCompatActivity {
     public enum VIEW {
         BEER, FAVORITES, LIQUOR, WINE
     }
+
+    final AsyncTask<Void, Void, Void> getBusInfoAsyncTask = new AsyncTask<Void, Void, Void>() {
+        private StringBuilder textBuilder = new StringBuilder();
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    };
 }
