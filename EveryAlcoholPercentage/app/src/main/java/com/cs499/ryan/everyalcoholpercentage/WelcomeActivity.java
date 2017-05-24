@@ -105,7 +105,7 @@ public class WelcomeActivity extends AppCompatActivity {
         if(beerList == null) {
             beerList = new ArrayList<Beverage>();
             if(!isNetworkAvailable()) {
-                Toast.makeText(this, "No internet connectivity", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No internet connectivity", Toast.LENGTH_LONG).show();
             }
         }
         beverageHolder = new ArrayList<>(beerList);
@@ -134,6 +134,12 @@ public class WelcomeActivity extends AppCompatActivity {
                                         Beverage b = ds.getValue(Beverage.class);
                                         beerList.add(b);
                                     }
+                                    Collections.sort(beerList, new Comparator<Beverage>() {
+                                        @Override
+                                        public int compare(Beverage lhs, Beverage rhs) {
+                                            return lhs.getName().compareTo(rhs.getName());
+                                        }
+                                    });
                                     beverageArrayAdapter.clear();
                                     beverageArrayAdapter.addAll(beerList);
                                     Paper.book().write("beerList", beerList);
@@ -190,22 +196,24 @@ public class WelcomeActivity extends AppCompatActivity {
         wineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentView != VIEW.WINE) {
+                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_LONG).show();
+                /*if(currentView != VIEW.WINE) {
                     beverageArrayAdapter.clear();
                     beverageArrayAdapter.addAll(wineList);
                     currentView = VIEW.WINE;
-                }
+                }*/
             }
         });
 
         liquorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentView != VIEW.LIQUOR) {
+                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_LONG).show();
+                /*if(currentView != VIEW.LIQUOR) {
                     beverageArrayAdapter.clear();
                     beverageArrayAdapter.addAll(liquorList);
                     currentView = VIEW.LIQUOR;
-                }
+                }*/
             }
         });
 
