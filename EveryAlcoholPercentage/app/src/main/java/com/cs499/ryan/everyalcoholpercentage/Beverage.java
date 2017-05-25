@@ -1,5 +1,7 @@
 package com.cs499.ryan.everyalcoholpercentage;
 
+import java.util.Arrays;
+
 /**
  * Created by Ryan on 5/14/17.
  */
@@ -36,15 +38,11 @@ public class Beverage {
 
     public Long getId() { return id; }
 
-    public void setName(String name) {
-        this.name = name;
+    public int hashCode() {
+        Object[] x = {id, name, makerName, alcoholPercentage};
+        return Arrays.hashCode(x);
     }
-
-    public void setMakerName(String makerName) {
-        this.makerName = makerName;
-    }
-
-    public void setAlcoholPercentage(String alcoholPercentage) {
-        this.alcoholPercentage = alcoholPercentage;
+    public String toString() {
+        return name;
     }
 }

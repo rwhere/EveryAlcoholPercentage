@@ -4,14 +4,17 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
@@ -25,12 +28,19 @@ public class BeverageArrayAdapter extends ArrayAdapter<Beverage> {
     private Context context;
     private int layoutResource;
     private List<Beverage> beverages;
+    private List<Beverage> ogBeveragesList;
 
     public BeverageArrayAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Beverage> objects) {
         super(context, resource, objects);
         this.context = context;
         this.layoutResource = resource;
         this.beverages = objects;
+        this.ogBeveragesList = objects;
+    }
+
+    @Override
+    public int getCount() {
+        return beverages.size();
     }
 
     @NonNull
@@ -84,6 +94,74 @@ public class BeverageArrayAdapter extends ArrayAdapter<Beverage> {
         textViewPercent.setText(beverages.get(position).getAlcoholPercentage());
 
         return view;
+    }
+
+    public void resetData() {
+        beverages = ogBeveragesList;
+    }
+
+    public List<Beverage> getData() {
+        return beverages;
+    }
+
+    public Beverage getItem(int position) {
+        return beverages.get(position);
+    }
+
+    public long getItemId(int position) {
+        return beverages.get(position).hashCode();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                // Now we have to inform the adapter about the new list filtered
+                beverages = (List<Beverage>) results.values;
+                notifyDataSetChanged();
+
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults results = new FilterResults();
+                // We implement here the filter logic
+                if (constraint == null || constraint.length() == 0) {
+                    // No filter implemented we return all the list
+                    results.values = ogBeveragesList;
+                    results.count = ogBeveragesList.size();
+                }
+                else {
+                    // We perform filtering operation
+                    List<Beverage> filteredResults = getFilteredResults(constraint);
+
+                    results.values = filteredResults;
+                    results.count = filteredResults.size();
+
+                }
+                return results;
+
+            }
+        };
+    }
+
+    public List<Beverage> getFilteredResults(CharSequence constraint) {
+        List<Beverage> results = new ArrayList<>();
+        Beverage temp;
+        int counter = 0;
+        for(int i = 0; i < this.getCount(); i++) {
+            temp = getItem(i);
+            if(temp.getName().toLowerCase().contains(constraint.toString().toLowerCase())
+                    || temp.getMakerName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                results.add(temp);
+                ++counter;
+            }
+        }
+        return results;
     }
 
     public void updateData(List<Beverage> list) {

@@ -34,12 +34,13 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/searchButton"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:background="@color/colorPrimary"
-            android:text="Search"
+            android:text=""
             android:textColor="@color/colorWhite"
             android:textSize="18dp" />
     </LinearLayout>
@@ -50,6 +51,12 @@
         android:layout_weight="75"
         android:background="@drawable/border"
         android:orientation="vertical">
+
+        <EditText android:id="@+id/inputSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search.."
+            android:inputType="textVisiblePassword"/>
 
         <ListView
             android:id="@+id/mainListView"

@@ -5,8 +5,10 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.PopupMenu;
 import android.view.MenuItem;
+
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,15 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import io.paperdb.Paper;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,8 +37,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private List<Beverage> beerList;
     private List<Beverage> wineList;
     private List<Beverage> liquorList;
-    private List<Beverage> beverageHolder;
-    public static List<Beverage> favoritesList;
+    public static HashSet<Beverage> favoritesList;
     private ListView listView;
     private BeverageArrayAdapter beverageArrayAdapter;
     public static HashSet<Long> favorites;
@@ -56,6 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ImageButton liquorButton;
     private ImageButton wineButton;
     private VIEW currentView = VIEW.BEER;
+    private EditText inputSearch;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -72,6 +66,7 @@ public class WelcomeActivity extends AppCompatActivity {
         beerButton = (ImageButton)findViewById(R.id.beerButton);
         liquorButton = (ImageButton)findViewById(R.id.liquorButton);
         wineButton = (ImageButton)findViewById(R.id.wineButton);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
 
         //grab user's favorites
         favorites = Paper.book().read("favorites");
@@ -80,7 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         favoritesList = Paper.book().read("favoritesList");
         if(favoritesList == null) {
-            favoritesList = new ArrayList<Beverage>();
+            favoritesList = new HashSet<>();
         }
 
         //grab version numbers
@@ -108,9 +103,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "No internet connectivity", Toast.LENGTH_LONG).show();
             }
         }
-        beverageHolder = new ArrayList<>(beerList);
         beverageArrayAdapter = new BeverageArrayAdapter(
-                WelcomeActivity.this, R.layout.listview_item, beverageHolder);
+                WelcomeActivity.this, R.layout.listview_item, beerList);
         listView.setAdapter(beverageArrayAdapter);
 
         final AsyncTask<Void, Void, Void> pullFromDataBaseIfNeeded = new AsyncTask<Void, Void, Void>() {
@@ -129,19 +123,23 @@ public class WelcomeActivity extends AppCompatActivity {
                             beerRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    beerList.clear();
+                                    HashSet<Beverage> bevSet = new HashSet<Beverage>();
                                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
                                         Beverage b = ds.getValue(Beverage.class);
-                                        beerList.add(b);
+                                        bevSet.add(b);
                                     }
+                                    beerList.clear();
+                                    beerList.addAll(bevSet);
                                     Collections.sort(beerList, new Comparator<Beverage>() {
                                         @Override
                                         public int compare(Beverage lhs, Beverage rhs) {
                                             return lhs.getName().compareTo(rhs.getName());
                                         }
                                     });
-                                    beverageArrayAdapter.clear();
-                                    beverageArrayAdapter.addAll(beerList);
+                                    //beverageArrayAdapter.clear();
+                                    //beverageArrayAdapter.addAll(beerList);
+                                    beverageArrayAdapter.updateData(beerList);
+                                    beverageArrayAdapter.notifyDataSetChanged();
                                     Paper.book().write("beerList", beerList);
                                     Paper.book().write("beerVersion", beerVersion = dbVersion);
                                 }
@@ -175,8 +173,8 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentView != VIEW.BEER) {
-                    beverageArrayAdapter.clear();
-                    beverageArrayAdapter.addAll(beerList);
+                    beverageArrayAdapter.updateData(beerList);
+                    beverageArrayAdapter.notifyDataSetChanged();
                     currentView = VIEW.BEER;
                 }
             }
@@ -186,8 +184,8 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentView != VIEW.FAVORITES) {
-                    beverageArrayAdapter.clear();
-                    beverageArrayAdapter.addAll(favoritesList);
+                    beverageArrayAdapter.updateData(new ArrayList<Beverage>(favoritesList));
+                    beverageArrayAdapter.notifyDataSetChanged();
                     currentView = VIEW.FAVORITES;
                 }
             }
@@ -196,10 +194,10 @@ public class WelcomeActivity extends AppCompatActivity {
         wineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_LONG).show();
+                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
                 /*if(currentView != VIEW.WINE) {
-                    beverageArrayAdapter.clear();
-                    beverageArrayAdapter.addAll(wineList);
+                    beverageArrayAdapter.updateData(wineList);
+                    beverageArrayAdapter.notifyDataSetChanged();
                     currentView = VIEW.WINE;
                 }*/
             }
@@ -208,12 +206,36 @@ public class WelcomeActivity extends AppCompatActivity {
         liquorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_LONG).show();
+                Toast.makeText(WelcomeActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
                 /*if(currentView != VIEW.LIQUOR) {
-                    beverageArrayAdapter.clear();
-                    beverageArrayAdapter.addAll(liquorList);
+                    beverageArrayAdapter.updateData(liquorList);
+                    beverageArrayAdapter.notifyDataSetChanged();
                     currentView = VIEW.LIQUOR;
                 }*/
+            }
+        });
+
+        inputSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count < before) {
+                    // We're deleting char so we need to reset the adapter data
+                    //any time a character is deleted you recover the orignal list then filter that
+                    beverageArrayAdapter.resetData();
+                }
+                beverageArrayAdapter.getFilter().filter(s.toString());
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -230,21 +252,21 @@ public class WelcomeActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         if(item.getItemId() == R.id.sortNameAscending) {
-                            Collections.sort(beverageHolder, new Comparator<Beverage>() {
+                            Collections.sort(beverageArrayAdapter.getData(), new Comparator<Beverage>() {
                                 @Override
                                 public int compare(Beverage lhs, Beverage rhs) {
                                     return lhs.getName().compareTo(rhs.getName());
                                 }
                             });
                         } else if (item.getItemId() == R.id.sortNameDescending) {
-                            Collections.sort(beverageHolder, new Comparator<Beverage>() {
+                            Collections.sort(beverageArrayAdapter.getData(), new Comparator<Beverage>() {
                                 @Override
                                 public int compare(Beverage lhs, Beverage rhs) {
                                     return -1 * lhs.getName().compareTo(rhs.getName());
                                 }
                             });
                         } else if(item.getItemId() == R.id.sortAscending) {
-                            Collections.sort(beverageHolder, new Comparator<Beverage>() {
+                            Collections.sort(beverageArrayAdapter.getData(), new Comparator<Beverage>() {
                                 @Override
                                 public int compare(Beverage lhs, Beverage rhs) {
                                     double d = (Double.valueOf(lhs.getAlcoholPercentage()) -
@@ -255,7 +277,7 @@ public class WelcomeActivity extends AppCompatActivity {
                                 }
                             });
                         } else if(item.getItemId() == R.id.sortDescending) {
-                            Collections.sort(beverageHolder, new Comparator<Beverage>() {
+                            Collections.sort(beverageArrayAdapter.getData(), new Comparator<Beverage>() {
                                 @Override
                                 public int compare(Beverage lhs, Beverage rhs) {
                                     double d = (Double.valueOf(rhs.getAlcoholPercentage()) -
@@ -267,19 +289,6 @@ public class WelcomeActivity extends AppCompatActivity {
                             });
                         }
                         beverageArrayAdapter.notifyDataSetChanged();
-                        if(currentView == VIEW.BEER) {
-                            beerList.clear();
-                            beerList.addAll(beverageHolder);
-                        } else if(currentView == VIEW.FAVORITES) {
-                            favoritesList.clear();
-                            favoritesList.addAll(beverageHolder);
-                        } else if(currentView == VIEW.WINE) {
-                            wineList.clear();
-                            wineList.addAll(beverageHolder);
-                        } else if(currentView == VIEW.LIQUOR) {
-                            liquorList.clear();
-                            liquorList.addAll(beverageHolder);
-                        }
                         return true;
                     }
                 });
